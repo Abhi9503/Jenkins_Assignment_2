@@ -8,21 +8,17 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the branch that triggered the build
-                checkout scm
+                git(
+                    branch: 'prod',
+                    url: 'https://github.com/Abhi9503/Jenkins_Assignment_2.git',
+                    credentialsId: 'github'
+                )
             }
         }
         stage('Copy to D Drive') {
             steps {
-                script {
-                    if (env.BRANCH_NAME == 'prod') {
-                        bat 'xcopy /E /I /Y index.html "D:\\Prod\\"'
-                    } else if (env.BRANCH_NAME == 'Test') {
-                        bat 'xcopy /E /I /Y index.html "D:\\Test\\"'
-                    } else {
-                        echo "Branch not configured for deployment: ${env.BRANCH_NAME}"
-                    }
-                }
+                // Copy index.html to D:\Prod
+                bat 'xcopy /E /I /Y index.html "D:\\Prod\\"'
             }
         }
     }
