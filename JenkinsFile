@@ -1,0 +1,17 @@
+pipeline {
+  agent any
+  environment {
+    GIT_REPO_NAME = "Jenkins_Python_App_01"
+    GIT_USER_NAME = "Abhi9503"
+    GITHUB_TOKEN = credentials('github')
+  }
+  stages {
+    stage('Checkout') {
+      steps {
+        git branch: 'develop',
+            url: 'https://github.com/Abhi9503/Jenkins_Python_App_01.git',
+            credentialsId: 'github'
+      }
+    }
+  }
+}
