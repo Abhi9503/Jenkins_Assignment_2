@@ -9,6 +9,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git(
+                    branch: 'Test',
                     url: 'https://github.com/Abhi9503/Jenkins_Assignment_2.git',
                     credentialsId: 'github'
                 )
@@ -16,15 +17,8 @@ pipeline {
         }
         stage('Copy to D Drive') {
             steps {
-                script {
-                    if (env.GIT_BRANCH == 'origin/prod' || env.BRANCH_NAME == 'prod') {
-                        bat 'xcopy /E /I /Y index.html "D:\\Prod\\"'
-                    } else if (env.GIT_BRANCH == 'origin/Test' || env.BRANCH_NAME == 'Test') {
-                        bat 'xcopy /E /I /Y index.html "D:\\Test\\"'
-                    } else {
-                        echo "Branch not configured for deployment: ${env.GIT_BRANCH}"
-                    }
-                }
+                // Copy index.html to D:\Prod
+                bat 'xcopy /E /I /Y index.html "D:\\Test\\"'
             }
         }
     }
